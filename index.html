@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101827" />
+  <title>Certificate Verification</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">C</div><div><strong>Certificate Issuer</strong><small>BLOCKCHAIN REGISTRY</small></div></div>
+    <div class="nav-label">WORKSPACE</div>
+    <button class="nav-item active" data-view="overview"><span>▦</span> Overview</button>
+    <button class="nav-item" data-view="certificates"><span>▤</span> Certificates</button>
+    <button class="nav-item" data-view="issue"><span>＋</span> Issue certificate</button>
+    <button class="nav-item" data-view="blockchain"><span>⬡</span> Blockchain explorer</button>
+    <button class="nav-item" data-view="mining"><span>⚒</span> Proof of Work</button>
+    <button class="nav-item" data-view="learn"><span>ⓘ</span> Learn blockchain</button>
+    <div class="sidebar-bottom"><div class="status-dot"></div><div><strong>Demo network</strong><small>Local simulation · Not public</small></div></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div><div class="eyebrow">CERTIFICATE REGISTRY / <span id="crumb">OVERVIEW</span></div><h1 id="page-title">Overview</h1></div>
+      <div class="top-actions"><span class="network-pill"><i></i> SIMULATED CHAIN</span><button class="avatar" title="Demo administrator">AD</button></div>
+    </header>
+
+    <section class="view active" id="view-overview">
+      <div class="welcome"><div><div class="eyebrow light">TRUST THROUGH TRANSPARENCY</div><h2>Certificate integrity,<br/><span>made verifiable.</span></h2><p>Issue certificates, explore hash-linked blocks, and demonstrate how Proof of Work helps secure a blockchain.</p><button class="btn btn-primary" data-go="issue">＋ Issue a certificate</button> <button class="btn btn-ghost" data-go="blockchain">Explore blockchain ↗</button></div><div class="hero-art"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="certificate-art"><div class="seal">✓</div><div class="art-line long"></div><div class="art-line"></div><div class="art-line short"></div><div class="art-ribbon">VERIFIED</div></div><div class="floating-hash">SHA-256<br/><b>HASH LINKED</b></div></div></div>
+      <div class="stats-grid">
+        <article class="stat-card"><div class="stat-top"><span>Certificates issued</span><span class="stat-icon purple">▤</span></div><div class="stat-number" id="stat-certs">3</div><div class="stat-foot">Records in this demo</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Blocks in chain</span><span class="stat-icon blue">⬡</span></div><div class="stat-number" id="stat-blocks">3</div><div class="stat-foot">Genesis block included</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Chain integrity</span><span class="stat-icon green">✓</span></div><div class="stat-number" id="stat-integrity">Valid</div><div class="stat-foot"><span class="green-text">●</span> Hash links verified</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Mining difficulty</span><span class="stat-icon amber">⚒</span></div><div class="stat-number">2 zeros</div><div class="stat-foot">Educational Proof of Work</div></article>
+      </div>
+      <div class="two-col">
+        <article class="panel"><div class="panel-heading"><div><h3>Recent certificates</h3><p>Latest records added to the registry</p></div><button class="text-button" data-go="certificates">View all →</button></div><div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>CERTIFICATE ID</th><th>STATUS</th></tr></thead><tbody id="recent-table"></tbody></table></div></article>
+        <article class="panel chain-summary"><div class="panel-heading"><div><h3>Blockchain health</h3><p>Quick integrity check</p></div><span class="health-badge" id="health-badge">● Healthy</span></div><div class="chain-mini" id="chain-mini"></div><button class="btn btn-outline full" id="validate-overview">✓ Validate entire chain</button><div id="overview-validation" class="inline-result" aria-live="polite"></div></article>
+      </div>
+      <div class="notice"><span>ⓘ</span><div><strong>Academic demo mode</strong><p>This project simulates blockchain concepts in your browser. It is not connected to a public blockchain or a real university registry.</p></div></div>
+    </section>
+
+    <section class="view" id="view-certificates">
+      <div class="section-intro"><div><h2>Certificate registry</h2><p>Search, inspect and verify certificate records.</p></div><button class="btn btn-primary" data-go="issue">＋ New certificate</button></div>
+      <div class="toolbar"><div class="search-box"><span>⌕</span><input id="cert-search" placeholder="Search name, course or certificate ID..." /></div><span id="cert-count" class="muted"></span></div>
+      <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>STUDENT</th><th>COURSE</th><th>CERTIFICATE ID</th><th>ISSUED</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="cert-table"></tbody></table></div><div id="empty-state" class="empty-state hidden">No certificates match your search.</div></div>
+      <div class="notice"><span>✓</span><div><strong>What verification checks</strong><p>The ID must exist, and the stored certificate data must match its recorded hash. This demonstrates integrity, not independent proof of who issued the certificate.</p></div></div>
+    </section>
+
+    <section class="view" id="view-issue">
+      <div class="section-intro"><div><h2>Issue a certificate</h2><p>Create a new certificate record and add it to the simulated chain.</p></div><span class="step-pill">STEP 01 / 03</span></div>
+      <div class="form-layout"><form id="issue-form" class="panel form-panel"><div class="form-heading"><span class="form-icon">▤</span><div><h3>Certificate details</h3><p>Fields marked with * are required.</p></div></div>
+        <label>Student full name *<input id="student-name" required maxlength="80" placeholder="e.g. Priya Sharma" /></label>
+        <label>Course / qualification *<input id="course-name" required maxlength="100" placeholder="e.g. Blockchain Engineering" /></label>
+        <div class="form-row"><label>Certificate ID *<input id="certificate-id" required maxlength="30" placeholder="e.g. CERT-2026-004" /></label><label>Issue date *<input id="issue-date" type="date" required /></label></div>
+        <label>Issuing institution *<input id="institution" required maxlength="100" value="SR University (Demo)" /></label>
+        <label>Additional note <textarea id="certificate-note" rows="2" maxlength="180" placeholder="Optional details"></textarea></label>
+        <div class="notice compact"><span>⌁</span><div><strong>Next: hash → block → mining</strong><p>Your certificate data will be hashed, linked to the previous block, and optionally mined with Proof of Work.</p></div></div>
+        <div class="form-actions"><button type="reset" class="btn btn-outline">Clear form</button><button type="submit" class="btn btn-primary">Create certificate →</button></div>
+        <div id="issue-message" class="inline-result" aria-live="polite"></div>
+      </form>
+      <aside class="panel side-explainer"><h3>What happens next?</h3><div class="explain-step"><b>1</b><div><strong>Generate SHA-256</strong><p>A fixed-length digital fingerprint is calculated from the certificate data.</p></div></div><div class="explain-step"><b>2</b><div><strong>Link the block</strong><p>The new block stores the previous block's hash, forming a chain.</p></div></div><div class="explain-step"><b>3</b><div><strong>Mine (optional)</strong><p>Find a nonce that makes the hash begin with the required number of zeros.</p></div></div><div class="side-tip">💡 Changing even one character normally changes the SHA-256 hash dramatically.</div></aside></div>
+    </section>
+
+    <section class="view" id="view-blockchain">
+      <div class="section-intro"><div><h2>Blockchain explorer</h2><p>Inspect blocks, hashes, previous-hash links and stored certificate data.</p></div><button id="validate-chain" class="btn btn-outline">✓ Validate chain</button></div>
+      <div class="chain-banner"><div><span class="eyebrow light">CURRENT LEDGER</span><h3 id="explorer-block-count">3 blocks linked together</h3><p>Each block points to the hash of the block before it.</p></div><div class="chain-banner-icon">⬡</div></div>
+      <div id="chain-result" class="inline-result"></div><div id="block-list" class="block-list"></div>
+      <div class="notice"><span>ⓘ</span><div><strong>Why previous hashes matter</strong><p>If an earlier block changes, its hash changes. The next block's stored previous hash no longer matches, so validation can detect the broken link.</p></div></div>
+    </section>
+
+    <section class="view" id="view-mining">
+      <div class="section-intro"><div><h2>Proof of Work lab</h2><p>Mine a block by searching for a nonce that satisfies the difficulty rule.</p></div><span class="step-pill">INTERACTIVE LAB</span></div>
+      <div class="mining-grid"><div class="panel mining-panel"><div class="panel-heading"><div><h3>Mining configuration</h3><p>Educational proof-of-work puzzle</p></div><span class="stat-icon amber">⚒</span></div>
+        <label>Block to mine<select id="mine-select"></select></label>
+        <label>Difficulty<select id="difficulty"><option value="1">1 leading zero (fast)</option><option value="2" selected>2 leading zeros (recommended)</option><option value="3">3 leading zeros (slower)</option></select></label>
+        <div class="mining-rule"><span>REQUIRED HASH PREFIX</span><strong id="prefix-preview">00</strong><small>Hash must start with the zeros shown above.</small></div>
+        <button class="btn btn-primary full" id="mine-button">⚒ Start mining</button><div id="mine-progress" class="progress-wrap hidden"><div class="progress-label"><span id="mine-status">Searching for a valid nonce…</span><span id="mine-percent">0%</span></div><div class="progress-track"><div id="progress-fill"></div></div></div>
+        <div id="mine-result" class="inline-result"></div>
+      </div><div class="panel mining-explainer"><h3>Proof of Work, simply</h3><div class="pow-step"><span>01</span><div><strong>Choose a nonce</strong><p>A nonce is a number that the miner can change.</p></div></div><div class="pow-step"><span>02</span><div><strong>Calculate the hash</strong><p>Hash the block data together with the nonce.</p></div></div><div class="pow-step"><span>03</span><div><strong>Check the rule</strong><p>If the hash does not start with enough zeros, try another nonce.</p></div></div><div class="pow-step"><span>04</span><div><strong>Accept the solution</strong><p>When a valid hash is found, the block is marked as mined.</p></div></div><div class="notice compact"><span>!</span><div><strong>Demo limitation</strong><p>This is a local simulation, not real Bitcoin mining or decentralized consensus.</p></div></div></div></div>
+      <div class="panel mining-output"><div class="panel-heading"><div><h3>Latest mining result</h3><p>Details from your most recent successful run</p></div></div><div class="result-grid"><div><span>NONCE</span><strong id="result-nonce">—</strong></div><div><span>ATTEMPTS</span><strong id="result-attempts">—</strong></div><div><span>TIME</span><strong id="result-time">—</strong></div></div><label>Resulting block hash</label><div class="hash-box" id="result-hash">Mine a block to see its hash.</div></div>
+    </section>
+
+    <section class="view" id="view-learn">
+      <div class="section-intro"><div><h2>Learn blockchain</h2><p>Use these simple explanations during your project demonstration.</p></div><span class="step-pill">QUICK GUIDE</span></div>
+      <div class="learn-grid">
+        <article class="panel learn-card"><div class="learn-icon purple">#</div><h3>1. Hash</h3><p>A hash is a digital fingerprint calculated from data. SHA-256 produces a 256-bit digest, usually shown as 64 hexadecimal characters.</p><div class="example-code">Certificate data → SHA-256 → 64-character hash</div></article>
+        <article class="panel learn-card"><div class="learn-icon blue">⬡</div><h3>2. Block</h3><p>A block groups data together with metadata such as its timestamp, nonce and hash of the previous block.</p><div class="example-code">Block = data + previous hash + nonce</div></article>
+        <article class="panel learn-card"><div class="learn-icon green">⛓</div><h3>3. Chain</h3><p>Each block stores the previous block's hash. This linking makes changes to old data detectable when the chain is validated.</p><div class="example-code">Block 3 → Block 2 hash → Block 1 hash</div></article>
+        <article class="panel learn-card"><div class="learn-icon amber">⚒</div><h3>4. Proof of Work</h3><p>Mining repeatedly changes a nonce until the block hash meets a difficulty rule. More leading zeros generally mean more attempts.</p><div class="example-code">Hash starts with “00” → puzzle solved</div></article>
+        <article class="panel learn-card"><div class="learn-icon rose">✓</div><h3>5. Verification</h3><p>CertiChain looks up the certificate ID, recalculates its hash and checks block links. A mismatch indicates a problem with the stored data.</p><div class="example-code">Stored record = expected record?</div></article>
+        <article class="panel learn-card"><div class="learn-icon teal">◎</div><h3>6. Decentralization</h3><p>A public blockchain is maintained by multiple participants. This project runs locally in one browser and does not implement a distributed network.</p><div class="example-code">This project = educational simulation</div></article>
+      </div>
+      <div class="panel viva-panel"><h3>Quick viva questions</h3><details><summary>Why do we use blockchain for certificates?</summary><p>It can provide a traceable, tamper-evident record that helps verifiers detect changes to certificate data.</p></details><details><summary>What is SHA-256?</summary><p>It is a cryptographic hash function that maps input data to a 256-bit digest.</p></details><details><summary>What is a nonce?</summary><p>A number changed during mining to search for a hash that meets the difficulty target.</p></details><details><summary>What happens if someone changes a certificate record?</summary><p>The recalculated hash may no longer match the stored hash, and the chain's links may fail validation.</p></details><details><summary>Is this connected to a real blockchain?</summary><p>No. It is a browser-based educational simulation. A real deployment would need a blockchain network, trusted issuer identities and appropriate security controls.</p></details><details><summary>Does Proof of Work prove a certificate is genuine?</summary><p>No. Proof of Work solves a computational puzzle. Certificate authenticity depends on trusted issuance and verification of the record.</p></details></div>
+    </section>
+
+    <footer>Certificate Verification<span>·</span> Blockchain Engineering project demo <span>·</span> Local simulation</footer>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+  <div class="modal-backdrop hidden" id="verify-modal"><div class="modal panel"><button class="modal-close" id="close-modal">×</button><div class="modal-check">✓</div><h2 id="modal-title">Certificate verification</h2><p id="modal-subtitle"></p><div id="modal-details" class="modal-details"></div><div id="modal-result" class="verification-result"></div><button class="btn btn-primary full" id="modal-done">Done</button></div></div>
+  <script src="script.js"></script>
+</body>
+</html>
